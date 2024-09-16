@@ -1,0 +1,14 @@
+:root{
+    --bleutrigo: #004983;
+    --verttrigo: #a8c855;
+    --lightgristrigo: #ebebeb;
+    --darkgristrigo: #59595b;
+    --background: lightgray;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Helvetica', sans-serif;
+    font-size: 12pt;
+}

@@ -1,0 +1,26 @@
+.Cards{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 75px;
+    margin: 10px;
+    padding: 50px;
+  }
+
+  
+body{
+    background-color: var(--background);    
+}
+.main{
+    padding: 2%;
+    margin: 1%;
+    background-color: white;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+}
+.page {
+    margin-top: 20px;
+  }
+  
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }

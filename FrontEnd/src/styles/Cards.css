@@ -1,0 +1,30 @@
+.Card{
+    margin: 2%;
+    border: 0.1px solid black;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+}
+
+.Card-image img{
+    width: 100%;
+    height: auto;
+    box-sizing: content-box;
+    box-shadow: inset 1em 0 0 gray;
+    border-bottom: 0.5px solid black;
+    object-fit: cover;
+    display: block;
+    
+}
+
+.Card-title{
+    text-align: center;
+    padding: 10px 20px;
+    height: 10%;
+}
+
+.Card a{
+    color: black;
+}
+
+.Card :hover{
+    background-color: var(--verttrigo);
+}

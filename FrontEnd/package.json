@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "projettrigo",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -9,10 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.4.29"
+    "vue": "^3.4.29",
+    "vue-router": "^4.4.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.45",
+    "tailwindcss": "^3.4.10",
     "vite": "^5.3.1"
   }
 }
