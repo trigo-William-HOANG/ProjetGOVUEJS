@@ -6,7 +6,7 @@ import (
 )
 
 type AppDataParams struct {
-	Title string
+	Id string
 }
 
 type AppDataResponse struct {
@@ -14,6 +14,7 @@ type AppDataResponse struct {
 	Title       string
 	Description string
 	Link        string
+	Image       string
 }
 
 type Error struct {

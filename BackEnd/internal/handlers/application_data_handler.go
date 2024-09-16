@@ -29,7 +29,7 @@ func GetAppDataHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var appData *tools.AppDetails = (*database).GetAppData(params.Title)
+	var appData *tools.AppDetails = (*database).GetAppData(params.Id)
 	if appData == nil {
 		api.InternalErrorHandler(w)
 		return
@@ -40,6 +40,7 @@ func GetAppDataHandler(w http.ResponseWriter, r *http.Request) {
 		Title:       (*appData).Title,
 		Description: (*appData).Description,
 		Link:        (*appData).Link,
+		Image:       (*appData).Image,
 	}
 
 	w.Header().Set("Content-Type", "application/json")
