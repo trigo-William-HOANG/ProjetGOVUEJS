@@ -29,7 +29,7 @@ func GetAppDataHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var appData *tools.AppDetails = (*database).GetAppData(params.Id)
+	var appData *tools.AppDetails = (*database).GetAppDetails(params.Id)
 	if appData == nil {
 		api.InternalErrorHandler(w)
 		return

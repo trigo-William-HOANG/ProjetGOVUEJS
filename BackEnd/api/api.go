@@ -6,7 +6,7 @@ import (
 )
 
 type AppDataParams struct {
-	Id string
+	Id int
 }
 
 type AppDataResponse struct {

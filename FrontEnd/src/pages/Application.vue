@@ -1,57 +1,50 @@
 <script setup>
-import "./../styles/App.css";
+import { ref, computed, onMounted, watch } from "vue";
 import Layout from "./../components/Layout.vue";
 import Cards from "./../components/Cards.vue";
-import { ref, computed } from "vue";
+import axios from 'axios'; // Ensure axios is installed
 
-const cards = [
-  {
-    imagesrc: "image/exp-appimage.jpg",
-    title: "Application 1",
-    description: "Petite Description",
-    link: "/application-1"
-  },
-  {
-    imagesrc: "image/exp-appimage.jpg",
-    title: "Application 2",
-    description: "Petite Description",
-    link: "/application-2"
-  },
-  {
-    imagesrc: "image/exp-appimage.jpg",
-    title: "Application 3",
-    description: "Petite Description",
-    link: "/application-3"
-  },
-  {
-    imagesrc: "image/exp-appimage2.jpg",
-    title: "Application 4",
-    description: "Petite Description",
-    link: "/application-4"
-  },
-  {
-    imagesrc: "image/exp-appimage2.jpg",
-    title: "application 5",
-    description: "Petite Description",
-    link: "/application-5"
-  },
-  {
-    imagesrc: "image/exp-appimage2.jpg",
-    title: "Application 6",
-    description: "Petite Description",
-    link: "/application-6"
-  },
-];
+// Reactive state for cards
+const cards = ref([]);
 
+// Pagination state
 const currentPage = ref(0);
 const itemsPerPage = 3;
 
-const paginatedCards = computed(() => {
-  const start = currentPage.value * itemsPerPage;
-  const end = start + itemsPerPage;
-  return cards.slice(start, end);
+// Function to fetch cards for the current page
+const fetchCards = async (page) => {
+  try {
+    const startId = page * itemsPerPage;
+    const endId = startId + itemsPerPage;
+    const fetchedCards = [];
+
+    for (let id = startId; id < endId; id++) {
+      const response = await axios.get(`http://localhost:8080/application-data/?Id=${id}`);
+      if (response.data) {
+        fetchedCards.push(response.data);
+      }
+    }
+
+    cards.value = fetchedCards;
+  } catch (error) {
+    console.error('Error fetching cards:', error);
+  }
+};
+
+// Watch for changes in currentPage and fetch new data when it changes
+watch(currentPage, (newPage) => {
+  fetchCards(newPage);
 });
-const totalPages = computed(() => Math.ceil(cards.length/itemsPerPage))
+
+// Initial fetch when the component is mounted
+onMounted(() => {
+  fetchCards(currentPage.value);
+});
+
+const paginatedCards = computed(() => cards.value);
+
+const totalPages = computed(() => Math.ceil(cards.value.length / itemsPerPage));
+
 const next = () => {
   if (currentPage.value < totalPages.value - 1) {
     currentPage.value++;
@@ -78,38 +71,31 @@ const goToPage = (page) => {
     </template>
 
     <template #content >
-    <div class="main">
-      <span> Lien direct vers les outils digitaux </span>
-      <div class="Cards">
-     
-        <Cards
-          v-for="(card, index) in paginatedCards"
-          :key="index"
-          :imagesrc="card.imagesrc"
-          :title="card.title"
-          :description="card.description"
-          :link="card.link"
-        />
-  
+      <div class="main">
+        <span>Lien direct vers les outils digitaux</span>
+        <div class="Cards">
+          <Cards
+            v-for="(card, index) in paginatedCards"
+            :key="index"
+            :imagesrc="card.Image"
+            :title="card.Title"
+            :description="card.Description"
+            :link="card.Link"
+          />
+        </div>
+        <div class="page">
+          <button @click="previous" :disabled="currentPage === 0">Précédent</button>
+          <button 
+            v-for="page in totalPages"
+            :key="page"
+            @click="goToPage(page - 1)"
+            :class="{ active: currentPage === page - 1 }"
+          >
+            {{ page }}
+          </button>
+          <button @click="next" :disabled="currentPage === totalPages - 1">Suivant</button>
+        </div>
       </div>
-      <div class="page">
-        <button @click="previous" :disabled="currentPage === 0">Précédent</button>
-        <button 
-          v-for="page in totalPages"
-          :key="page"
-          @click="goToPage(page - 1)"
-          :class="{ active: currentPage === page - 1 }"
-        >
-          {{ page }}
-        </button>
-        <button @click="next" :disabled="currentPage === Math.ceil(cards.length / itemsPerPage) - 1">Suivant</button>
-        
-
-      </div>
-      </div>
-    
-    
-    </template>    
+    </template>
   </Layout>
 </template>
-

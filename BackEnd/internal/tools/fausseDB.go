@@ -1,6 +1,7 @@
 package tools
 
 import (
+	"strconv"
 	"time"
 )
 
@@ -30,12 +31,12 @@ var fausseDBDetails = map[string]AppDetails{
 	},
 }
 
-func (d *fausseDB) GetAppData(id string) *AppDetails {
+func (d *fausseDB) GetAppDetails(id int) *AppDetails {
 	// temps de chargement de la DB
 	time.Sleep(time.Second * 1)
 
 	var appData = AppDetails{}
-	appData, ok := fausseDBDetails[id]
+	appData, ok := fausseDBDetails[strconv.Itoa(id)]
 	if !ok {
 		return nil
 	}
