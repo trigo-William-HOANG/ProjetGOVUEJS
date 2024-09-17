@@ -2,16 +2,14 @@
 import { ref, computed, onMounted, watch } from "vue";
 import Layout from "./../components/Layout.vue";
 import Cards from "./../components/Cards.vue";
-import axios from 'axios'; // Ensure axios is installed
+import axios from 'axios'; 
 
-// Reactive state for cards
+
 const cards = ref([]);
 
-// Pagination state
 const currentPage = ref(0);
 const itemsPerPage = 3;
 
-// Function to fetch cards for the current page
 const fetchCards = async (page) => {
   try {
     const startId = page * itemsPerPage;
@@ -31,12 +29,10 @@ const fetchCards = async (page) => {
   }
 };
 
-// Watch for changes in currentPage and fetch new data when it changes
 watch(currentPage, (newPage) => {
   fetchCards(newPage);
 });
 
-// Initial fetch when the component is mounted
 onMounted(() => {
   fetchCards(currentPage.value);
 });
